@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Plant Health Monitor</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: linear-gradient(135deg, #3A1C71, #2E86C1);
+            color: white;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            min-height: 100vh;
+            text-align: center;
+        }
+        .container {
+            width: 90%;
+            max-width: 1000px;
+            background: rgba(255, 255, 255, 0.15);
+            padding: 25px;
+            border-radius: 15px;
+            box-shadow: 0 0 15px rgba(255, 255, 255, 0.2);
+        }
+        h1 {
+            font-size: 32px;
+            color: #ffcc70;
+        }
+        .sensor-box {
+            background: rgba(255, 255, 255, 0.2);
+            padding: 20px;
+            margin: 15px 0;
+            border-radius: 12px;
+            box-shadow: 0 0 10px rgba(255, 255, 255, 0.1);
+        }
+        .sensor-value {
+            font-size: 28px;
+            font-weight: bold;
+            color: #ffdb70;
+        }
+        .button {
+            padding: 12px 24px;
+            font-size: 18px;
+            border: none;
+            border-radius: 25px;
+            cursor: pointer;
+            background: #ffcc70;
+            color: black;
+            font-weight: bold;
+            transition: all 0.3s ease-in-out;
+            margin-top: 15px;
+        }
+        .button:hover {
+            background: #ffaa33;
+        }
+        .charts-container {
+            display: flex;
+            justify-content: space-around;
+            flex-wrap: wrap;
+        }
+        .chart-container {
+            width: 45%;
+            min-width: 300px;
+            margin: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Plant Health Monitor</h1>
+        <div class="sensor-box">
+            <h2>Soil Moisture</h2>
+            <p class="sensor-value" id="soil-moisture">--%</p>
+            <h2>Humidity</h2>
+            <p class="sensor-value" id="humidity">--%</p>
+            <h2>Distance Measured (HC-SR04)</h2>
+            <p class="sensor-value" id="distance">-- cm</p>
+        </div>
+        
+        <div class="charts-container">
+            <div class="chart-container">
+                <canvas id="plantHealthChart"></canvas>
+            </div>
+            <div class="chart-container">
+                <canvas id="distanceChart"></canvas>
+            </div>
+        </div>
+
+        <button class="button" onclick="window.location.href='index.html'">Back to Dashboard</button>
+    </div>
+
+    <script>
+        // Simulated ESP32 data (Replace with actual ESP32 values)
+        let soilMoistureValues = [40, 45, 50, 55, 60];
+        let humidityValues = [60, 63, 67, 70, 74];
+        let distanceValues = [20, 22, 19, 18, 21];
+
+        document.getElementById("soil-moisture").innerText = soilMoistureValues[soilMoistureValues.length - 1] + "%";
+        document.getElementById("humidity").innerText = humidityValues[humidityValues.length - 1] + "%";
+        document.getElementById("distance").innerText = distanceValues[distanceValues.length - 1] + " cm";
+
+        // Plant Health Graph
+        const plantHealthCtx = document.getElementById('plantHealthChart').getContext('2d');
+        new Chart(plantHealthCtx, {
+            type: 'bar',
+            data: {
+                labels: ["1", "2", "3", "4", "5"],
+                datasets: [
+                    {
+                        label: 'Soil Moisture (%)',
+                        data: soilMoistureValues,
+                        backgroundColor: 'rgba(76, 175, 80, 0.7)'
+                    },
+                    {
+                        label: 'Humidity (%)',
+                        data: humidityValues,
+                        backgroundColor: 'rgba(54, 162, 235, 0.7)'
+                    }
+                ]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                }
+            }
+        });
+
+        // HC-SR04 Distance Graph
+        const distanceCtx = document.getElementById('distanceChart').getContext('2d');
+        new Chart(distanceCtx, {
+            type: 'line',
+            data: {
+                labels: ["1", "2", "3", "4", "5"],
+                datasets: [{
+                    label: 'Distance (cm)',
+                    data: distanceValues,
+                    borderColor: 'rgba(255, 99, 132, 1)',
+                    backgroundColor: 'rgba(255, 99, 132, 0.2)',
+                    fill: true
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                }
+            }
+        });
+    </script>
+</body>
+</html>

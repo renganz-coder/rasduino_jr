@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ESP32 Dashboard</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: linear-gradient(135deg, #1E3A8A, #3A6073);
+            color: #ffffff;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            height: 100vh;
+            margin: 0;
+        }
+
+        .container {
+            text-align: center;
+            background: rgba(255, 255, 255, 0.1);
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 0 15px rgba(255, 255, 255, 0.2);
+        }
+
+        h1 {
+            margin-bottom: 20px;
+        }
+
+        .buttons {
+            display: flex;
+            gap: 20px;
+        }
+
+        button {
+            position: relative;
+            padding: 15px 30px;
+            font-size: 18px;
+            font-weight: bold;
+            color: #ffffff;
+            background: #444;
+            border: 3px solid transparent;
+            border-radius: 30px;
+            cursor: pointer;
+            transition: background 0.3s ease-in-out, color 0.3s ease-in-out;
+        }
+
+        button:hover {
+            background: #666;
+        }
+
+        button::after {
+            content: "";
+            position: absolute;
+            top: -6px;
+            left: -6px;
+            right:  -6px;
+            bottom: -6px;
+            border-radius: 30px;
+            border: 3px  transparent;
+            background: linear-gradient(90deg, red, orange, yellow, green, cyan, blue, violet);
+            background-size: 200%;
+            animation: rainbow-border 4s linear infinite;
+            z-index: -1;
+        }
+
+        @keyframes rainbow-border {
+            0% { background-position: 50% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 50% 50%; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Smart Plant & Weather Monitor</h1>
+        <div class="buttons">
+            <button onclick="window.location.href='planthealth.html'">Plant Health</button>
+            <button onclick="window.location.href='weatherstation.html'">Weather Station</button>
+        </div>
+    </div>
+</body>
+</html>
